@@ -1,8 +1,8 @@
-#Kali-Linux
+# Kali-Linux
 
 Вводный курс работы в Kali Linux и Hack The Box
 
-<h2>bash-menu</h2>
+<h3>Bash-menu</h3>
 
 bash-скрипт с интерактивным меню, который может выполнять следующие функции:
 
