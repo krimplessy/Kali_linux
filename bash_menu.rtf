@@ -1,0 +1,76 @@
+{\rtf1\ansi\ansicpg1251\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 #!/bin/bash\
+\
+list=("1.System" "2.List all files in home dir" "3.Create dir and file" "4.Send data packets" "5.Exit")\
+\
+function menu() \{\
+	list=$1\
+	echo "Menu:"\
+	for val in "$\{list[@]\}"; do \
+		echo "$val"\
+	done\
+\}\
+\
+function sys_info() \{\
+	user_info=$\{USER\}\
+	sys_info=$(cat /etc/os-release)\
+	echo "User: $user_info System: $sys_info"\
+\}\
+\
+function all_files() \{\
+	ls -la $HOME\
+\}\
+\
+function create_file() \{\
+	echo -e "Name of file: \\c"\
+	read file_name\
+	echo -e "Dir: \\c"\
+	read dir\
+	echo -e "Access rights: \\c"\
+	read access\
+	\
+	touch "$dir/$file_name"\
+	chmod $access "$dir/$file_name"\
+	\
+	ls -l "$dir/$file_name"\
+\}\
+\
+function send_packets() \{\
+	echo -e "Write domain: \\c"\
+	read domain\
+	if [ -z "$domain" ] \
+	then \
+		echo "Domain not found"\
+	else\
+		echo -e "Enter the number of packeges: \\c"\
+		read n\
+		if [ -z "$n" ]; \
+		then \
+			echo "Incorrect number"\
+		else\
+			ping -c $n $domain\
+		fi\
+	fi\
+\}\
+\
+while [ true ]; do \
+	menu $list\
+	echo -e "Enter the command: \\c" \
+	read number\
+	echo -e "\\n"\
+	case $number in\
+		1) sys_info;;\
+		2) all_files;;\
+		3) create_file;;\
+		4) send_packets;;\
+		5) exit;;\
+		*) echo "Incorrect";\
+	esac\
+	echo -e "\\n"\
+done}
